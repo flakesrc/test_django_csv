@@ -1,9 +1,11 @@
 import os
 import django
 import csv
+from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 django.setup()
+
 
 from olympic.models import Game, Team, Athlete
 
