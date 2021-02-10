@@ -12,6 +12,9 @@ def populate():
     with open("assets/athlete_events.csv") as athlete_events:
         reader = csv.reader(athlete_events)
 
+        # pular os nomes dos campos do csv
+        next(reader)
+
         for rows in reader:
             pk = rows[0]
             name = rows[1]
@@ -29,11 +32,13 @@ def populate():
             event = rows[13]
             medal = rows[14]
 
-            athelete = Athlete.objects.get_or_create(
+            athlete, _ = Athlete.objects.get_or_create(
                 id=pk, name=name, sex=sex, age=age, height=height, weight=weight
             )
-            team = Team.objects.get_or_create(name=team_name, noc=noc)
-            game = Game.objects.get_or_create(
+            print(athlete)
+            team, _ = Team.objects.get_or_create(name=team_name, noc=noc)
+            print(team)
+            game, _ = Game.objects.get_or_create(
                 name=game_name,
                 year=year,
                 season=season,
@@ -41,7 +46,11 @@ def populate():
                 sport=sport,
                 event=event,
                 medal=medal,
+                # models
+                athlete=athlete,
+                team=team,
             )
+            print(game)
 
 
 if __name__ == "__main__":
