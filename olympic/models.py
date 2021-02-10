@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Athlete(models.Model):
@@ -21,17 +22,12 @@ class Team(models.Model):
 
 
 class Game(models.Model):
-    NA = 0
-    BRONZE = 1
-    SILVER = 2
-    GOLD = 3
+    class Medal(models.TextChoices):
 
-    MEDAL_CHOICES = [
-        (NA, "NA"),
-        (BRONZE, "Bronze"),
-        (SILVER, "Silver"),
-        (GOLD, "Gold"),
-    ]
+        NA = "NA", _("None")
+        BRONZE = "Bronze", _("Bronze")
+        SILVER = "Silver", _("Silver")
+        GOLD = "Gold", _("Gold")
 
     athlete = models.ManyToManyField(Athlete)
     team = models.ManyToManyField(Team)
@@ -41,7 +37,7 @@ class Game(models.Model):
     city = models.CharField(max_length=80)
     sport = models.CharField(max_length=80)
     event = models.CharField(max_length=80)
-    medal = models.IntegerField(choices=MEDAL_CHOICES)
+    medal = models.IntegerField(choices=Medal.choices)
 
     def __str__(self):
         return self.season
