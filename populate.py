@@ -34,13 +34,12 @@ def populate():
             event = rows[13]
             medal = rows[14]
 
-            athlete, _ = Athlete.objects.get_or_create(
+            athlete = Athlete.objects.create(
                 id=pk, name=name, sex=sex, age=age, height=height, weight=weight
             )
-            print(athlete)
-            team, _ = Team.objects.get_or_create(name=team_name, noc=noc)
-            print(team)
-            game, _ = Game.objects.get_or_create(
+            team = Team.objects.create(name=team_name, noc=noc)
+
+            game = Game.objects.create(
                 name=game_name,
                 year=year,
                 season=season,
@@ -48,10 +47,10 @@ def populate():
                 sport=sport,
                 event=event,
                 medal=medal,
-                # models
-                athlete=athlete,
-                team=team,
             )
+            game.athlete.add(athlete)
+            game.team.add(team)
+
             print(game)
 
 
