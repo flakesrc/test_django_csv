@@ -37,7 +37,7 @@ class Game(models.Model):
     city = models.CharField(max_length=80)
     sport = models.CharField(max_length=80)
     event = models.CharField(max_length=80)
-    medal = models.IntegerField(choices=Medal.choices)
+    medal = models.CharField(max_length=80, choices=Medal.choices)
 
     def __str__(self):
         return self.season
