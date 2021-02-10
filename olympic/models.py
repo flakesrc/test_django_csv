@@ -6,8 +6,8 @@ class Athlete(models.Model):
     name = models.CharField(max_length=80)
     sex = models.CharField(max_length=1)
     age = models.IntegerField()
-    height = models.IntegerField()
-    weight = models.IntegerField()
+    height = models.CharField(max_length=80)
+    weight = models.CharField(max_length=80)
 
     def __str__(self):
         return self.name
