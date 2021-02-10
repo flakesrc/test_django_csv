@@ -14,8 +14,8 @@ class Athlete(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=80)
-    noc = models.CharField(max_length=3)
+    name = models.CharField(max_length=80, unique=True)
+    noc = models.CharField(max_length=3, unique=True)
 
     def __str__(self):
         return self.name
