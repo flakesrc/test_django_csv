@@ -13,8 +13,6 @@ class Athlete(models.Model):
 
 
 class Team(models.Model):
-    athlete = models.ManyToManyField(Athlete)
-
     name = models.CharField(max_length=80)
     noc = models.CharField(max_length=3)
 
@@ -35,7 +33,7 @@ class Game(models.Model):
         (GOLD, "Gold"),
     ]
 
-    athele = models.ManyToManyField(Athlete)
+    athlete = models.ManyToManyField(Athlete)
     team = models.ManyToManyField(Team)
 
     year = models.IntegerField()
