@@ -32,6 +32,7 @@ class Game(models.Model):
     athlete = models.ManyToManyField(Athlete)
     team = models.ManyToManyField(Team)
 
+    name = models.CharField(max_length=80)
     year = models.IntegerField()
     season = models.CharField(max_length=80)
     city = models.CharField(max_length=80)
