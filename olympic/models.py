@@ -5,9 +5,9 @@ from django.utils.translation import gettext_lazy as _
 class Athlete(models.Model):
     name = models.CharField(max_length=80)
     sex = models.CharField(max_length=1)
-    age = models.IntegerField()
-    height = models.CharField(max_length=80)
-    weight = models.CharField(max_length=80)
+    age = models.IntegerField(null=True)
+    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
     team = models.CharField(max_length=80)
     noc = models.CharField(max_length=3)
 
