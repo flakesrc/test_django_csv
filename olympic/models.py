@@ -8,14 +8,8 @@ class Athlete(models.Model):
     age = models.IntegerField()
     height = models.CharField(max_length=80)
     weight = models.CharField(max_length=80)
-
-    def __str__(self):
-        return self.name
-
-
-class Team(models.Model):
-    name = models.CharField(max_length=80, unique=True)
-    noc = models.CharField(max_length=3, unique=True)
+    name = models.CharField(max_length=80)
+    noc = models.CharField(max_length=3)
 
     def __str__(self):
         return self.name
@@ -30,7 +24,6 @@ class Game(models.Model):
         GOLD = "Gold", _("Gold")
 
     athlete = models.ManyToManyField(Athlete)
-    team = models.ManyToManyField(Team)
 
     name = models.CharField(max_length=80)
     year = models.IntegerField()
@@ -41,4 +34,4 @@ class Game(models.Model):
     medal = models.CharField(max_length=80, choices=Medal.choices)
 
     def __str__(self):
-        return self.season
+        return self.name
