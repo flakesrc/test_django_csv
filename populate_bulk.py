@@ -2,6 +2,7 @@ import os
 import django
 import csv
 from django.conf import settings
+from django.db.utils import IntegrityError
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 django.setup()
@@ -15,6 +16,9 @@ def populate():
 
         # pula a row com o nome dos campos csv
         next(reader)
+
+        athlete_objs = []
+        game_objs = []
 
         for i, rows in enumerate(reader):
 
@@ -38,38 +42,36 @@ def populate():
             event = rows[13]
             medal = rows[14]
 
-            athlete, _ = Athlete.objects.get_or_create(
+            athlete_instance = Athlete(
                 id=pk,
-                defaults={
-                    "name": name,
-                    "sex": sex,
-                    "age": age,
-                    "height": height,
-                    "weight": weight,
-                    "team": team,
-                    "noc": noc,
-                },
+                name=name,
+                sex=sex,
+                age=age,
+                height=height,
+                weight=weight,
+                team=team,
+                noc=noc,
             )
 
-            game, _ = Game.objects.get_or_create(
-                id=register_row_number,
-                defaults={
-                    "name": game_name,
-                    "year": year,
-                    "season": season,
-                    "city": city,
-                    "sport": sport,
-                    "event": event,
-                    "medal": medal,
-                },
+            athlete_objs.append(athlete_instance)
+
+            game_objs.append(
+                Game(
+                    id=register_row_number,
+                    name=game_name,
+                    year=year,
+                    season=season,
+                    city=city,
+                    sport=sport,
+                    event=event,
+                    medal=medal,
+                ).athlete.add(
+                    athlete_instance
+                )  # não funciona
             )
 
-            if not game.athlete.exists():
-                game.athlete.add(athlete)
-                print(f"Registo '{register_row_number}' adicionado.")
-
-            if i == 29:
-                break
+        Athlete.objects.bulk_create(athlete_objs, ignore_conflicts=True)
+        Game.objects.bulk_create(game_objs, ignore_conflicts=True)
 
 
 if __name__ == "__main__":
