@@ -8,7 +8,7 @@ class Athlete(models.Model):
     age = models.IntegerField()
     height = models.CharField(max_length=80)
     weight = models.CharField(max_length=80)
-    name = models.CharField(max_length=80)
+    team = models.CharField(max_length=80)
     noc = models.CharField(max_length=3)
 
     def __str__(self):

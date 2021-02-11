@@ -7,7 +7,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 
 try:
     django.setup()
-    from olympic.models import Game, Team, Athlete
+    from olympic.models import Game, Athlete
 except:
     pass
 
@@ -26,7 +26,7 @@ def populate():
             age = rows[3]
             height = rows[4]
             weight = rows[5]
-            team_name = rows[6]
+            team = rows[6]
             noc = rows[7]
             game_name = rows[8]
             year = rows[9]
@@ -37,9 +37,17 @@ def populate():
             medal = rows[14]
 
             athlete, _ = Athlete.objects.get_or_create(
-                id=pk, name=name, sex=sex, age=age, height=height, weight=weight
+                id=pk,
+                defaults={
+                    "name": name,
+                    "sex": sex,
+                    "age": age,
+                    "height": height,
+                    "weight": weight,
+                    "team": team,
+                    "noc": noc,
+                },
             )
-            team, _ = Team.objects.get_or_create(name=team_name, noc=noc)
 
             game = Game.objects.create(
                 name=game_name,
@@ -51,7 +59,6 @@ def populate():
                 medal=medal,
             )
             game.athlete.add(athlete)
-            game.team.add(team)
 
             print(game)
 
