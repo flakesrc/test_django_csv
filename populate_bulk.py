@@ -1,3 +1,4 @@
+# SCRIPT NÃO ESTÁ FUNCIONANDO ATUALMENTE
 import os
 import django
 import csv
@@ -66,7 +67,7 @@ def populate():
                     event=event,
                     medal=medal,
                 )
-                .save(commit=False)
+                .save()
                 .athlete.add(athlete_instance)
             )
 
