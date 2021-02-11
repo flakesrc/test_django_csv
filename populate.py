@@ -25,7 +25,7 @@ def populate():
             sex = rows[2]
             age = rows[3] if rows[3] != "NA" else None
             height = rows[4] if rows[4] != "NA" else None
-            weight = rows[5] if rows[5] != "NA" else None
+            weight = float(rows[5] if rows[5] != "NA" else None)
             team = rows[6]
             noc = rows[7]
             game_name = rows[8]
