@@ -1,4 +1,10 @@
 # SCRIPT NÃO ESTÁ FUNCIONANDO ATUALMENTE
+# TODO: obter o id do atleta e inserir em um campo
+#       do model Game
+#       depois, fazer o bulk sem as relações
+#       e após os dados serem inseridos, realizar
+#       um loop somente para adicionar as relações
+
 import os
 import django
 import csv
