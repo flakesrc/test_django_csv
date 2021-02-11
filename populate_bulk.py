@@ -65,9 +65,9 @@ def populate():
                     sport=sport,
                     event=event,
                     medal=medal,
-                ).athlete.add(
-                    athlete_instance
-                )  # não funciona
+                )
+                .save(commit=False)
+                .athlete.add(athlete_instance)
             )
 
         Athlete.objects.bulk_create(athlete_objs, ignore_conflicts=True)
