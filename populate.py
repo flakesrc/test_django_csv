@@ -4,22 +4,24 @@ import csv
 from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
+django.setup()
 
-try:
-    django.setup()
-    from olympic.models import Game, Athlete
-except:
-    pass
+from olympic.models import Game, Athlete
 
 
 def populate():
     with open("assets/athlete_events.csv") as athlete_events:
         reader = csv.reader(athlete_events)
 
-        # pular os nomes dos campos do csv
+        # pula a row com o nome dos campos csv
         next(reader)
 
-        for rows in reader:
+        for i, rows in enumerate(reader):
+
+            # número da linha do registro no csv
+            # usado para identificar o game e usar como id
+            register_row_number = i + 1
+
             pk = rows[0]
             name = rows[1]
             sex = rows[2]
@@ -49,23 +51,30 @@ def populate():
                 },
             )
 
-            game = Game.objects.create(
-                name=game_name,
-                year=year,
-                season=season,
-                city=city,
-                sport=sport,
-                event=event,
-                medal=medal,
+            game, _ = Game.objects.get_or_create(
+                id=register_row_number,
+                defaults={
+                    "name": game_name,
+                    "year": year,
+                    "season": season,
+                    "city": city,
+                    "sport": sport,
+                    "event": event,
+                    "medal": medal,
+                },
             )
-            game.athlete.add(athlete)
 
-            print(game)
+            if not game.athlete.exists():
+                game.athlete.add(athlete)
+                print(f"Registo '{register_row_number}' adicionado.")
+
+            if i == 29:
+                break
 
 
 if __name__ == "__main__":
-    print(f"\n{'='*5} Populando campos a partir do csv... {'='*5}\n")
+    print("\nPopulando campos a partir do csv...")
 
     populate()
 
-    print(f"\n{'='*5} População concluída. {'='*5}\n")
+    print(f"\nPopulação concluída. Total de registros: {Game.objects.count()}\n")
