@@ -29,9 +29,9 @@ class Game(models.Model):
     year = models.IntegerField()
     season = models.CharField(max_length=80)
     city = models.CharField(max_length=80)
-    sport = models.CharField(max_length=80)
-    event = models.CharField(max_length=80)
-    medal = models.CharField(max_length=80, choices=Medal.choices)
+    sport = models.CharField(max_length=200)
+    event = models.CharField(max_length=200)
+    medal = models.CharField(max_length=10, choices=Medal.choices)
 
     def __str__(self):
         return self.name
