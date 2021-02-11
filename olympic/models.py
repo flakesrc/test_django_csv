@@ -7,7 +7,7 @@ class Athlete(models.Model):
     sex = models.CharField(max_length=1)
     age = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
-    weight = models.IntegerField(null=True)
+    weight = models.FloatField(null=True)
     team = models.CharField(max_length=80)
     noc = models.CharField(max_length=3)
 
