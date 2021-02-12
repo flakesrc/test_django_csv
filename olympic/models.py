@@ -23,6 +23,7 @@ class Game(models.Model):
         SILVER = "Silver", _("Silver")
         GOLD = "Gold", _("Gold")
 
+    athlete_id_ref = models.IntegerField(null=True)
     athlete = models.ManyToManyField(Athlete)
 
     name = models.CharField(max_length=201)
