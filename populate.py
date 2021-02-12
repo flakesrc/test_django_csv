@@ -1,3 +1,4 @@
+# tempo para finalizar a população no teste local: 0:06:02
 import os
 import django
 import pandas as pd
@@ -17,7 +18,6 @@ def normalize_na(value):
 
 
 def populate():
-
     athlete_list = pd.read_csv("assets/athlete_events.csv")
 
     df = pd.DataFrame(
@@ -41,40 +41,59 @@ def populate():
         ],
     )
 
+    athlete_objs = []
+    game_objs = []
+
     for row in df.itertuples():
 
         # número da linha de registros de jogos
         # começa no index 2 do csv
         register_row_number = row.Index + 2
 
-        athlete, _ = Athlete.objects.get_or_create(
+        athlete_instance = Athlete(
             id=row.ID,
-            defaults={
-                "name": row.Name,
-                "sex": row.Sex,
-                "age": normalize_na(row.Age),
-                "height": normalize_na(row.Height),
-                "weight": normalize_na(row.Weight),
-                "team": row.Team,
-                "noc": row.NOC,
-            },
+            name=row.Name,
+            sex=row.Sex,
+            age=normalize_na(row.Age),
+            height=normalize_na(row.Height),
+            weight=normalize_na(row.Weight),
+            team=row.Team,
+            noc=row.NOC,
         )
+        athlete_objs.append(athlete_instance)
 
-        game, _ = Game.objects.get_or_create(
+        game_instance = Game(
             id=register_row_number,
-            defaults={
-                "name": row.Games,
-                "year": row.Year,
-                "season": row.Season,
-                "city": row.City,
-                "sport": row.Sport,
-                "event": row.Event,
-                "medal": normalize_na(row.Medal),
-            },
+            athlete_id_ref=athlete_instance.id,
+            name=row.Games,
+            year=row.Year,
+            season=row.Season,
+            city=row.City,
+            sport=row.Sport,
+            event=row.Event,
+            medal=normalize_na(row.Medal),
         )
+        game_objs.append(game_instance)
 
-        if not game.athlete.exists():
-            game.athlete.add(athlete)
+    # adiciona as instancias no banco de dados
+    # ignore_conflicts ativado para não haver erro
+    # se o registro já existir, caso o script seja
+    # interrompido e executado posteriormente
+    print("Adicionando instâncias Athlete...")
+    Athlete.objects.bulk_create(athlete_objs, ignore_conflicts=True)
+
+    print("Adicionando instâncias Game...")
+    Game.objects.bulk_create(game_objs, ignore_conflicts=True)
+
+    # === adiciona/atualiza relação ===
+
+    athletes = Athlete.objects.all()
+    games = Game.objects.all()
+
+    print("Atualizando valores da relação Game.athlete ...")
+    for game in games:
+        athlete_related = athletes.get(id=game.athlete_id_ref)
+        game.athlete.add(athlete_related)
 
 
 if __name__ == "__main__":
