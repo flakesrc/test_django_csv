@@ -1,13 +1,8 @@
-# SCRIPT NÃO ESTÁ FUNCIONANDO ATUALMENTE
-# TODO: obter o id do atleta e inserir em um campo
-#       do model Game
-#       depois, fazer o bulk sem as relações
-#       e após os dados serem inseridos, realizar
-#       um loop somente para adicionar as relações
-
+# tempo para finalizar a população no teste local: 0:06:02
 import os
 import django
 import pandas as pd
+from datetime import datetime
 from django.conf import settings
 from django.db.utils import IntegrityError
 
@@ -82,15 +77,31 @@ def populate():
         game_objs.append(game_instance)
 
     # adiciona as instancias no banco de dados
-    # ignore para ignorar se já existir um registro
-    # caso o script seja pausado e executado posteriormente
+    # ignore_conflicts ativado para não haver erro
+    # se o registro já existir, caso o script seja
+    # interrompido e executado posteriormente
+    print("Adicionando instâncias Athlete...")
     Athlete.objects.bulk_create(athlete_objs, ignore_conflicts=True)
+
+    print("Adicionando instâncias Game...")
     Game.objects.bulk_create(game_objs, ignore_conflicts=True)
+
+    # === adiciona/atualiza relação ===
+
+    athletes = Athlete.objects.all()
+    games = Game.objects.all()
+
+    print("Atualizando valores da relação Game.athlete ...")
+    for game in games:
+        athlete_related = athletes.get(id=game.athlete_id_ref)
+        game.athlete.add(athlete_related)
 
 
 if __name__ == "__main__":
+    startTime = datetime.now()
     print("\nPopulando campos a partir do csv...\n")
 
     populate()
 
     print(f"\nPopulação concluída. Total de registros: {Game.objects.count()}\n")
+    print(f"Duração: {str(datetime.now() - startTime).split('.')[0]}")
