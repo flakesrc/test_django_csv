@@ -4,7 +4,6 @@ import django
 import pandas as pd
 from datetime import datetime
 from django.conf import settings
-from django.db.utils import IntegrityError
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 django.setup()
