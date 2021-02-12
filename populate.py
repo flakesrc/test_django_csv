@@ -10,69 +10,78 @@ django.setup()
 from olympic.models import Game, Athlete
 
 
+def normalize_na(value):
+    na_values = ["nan", "NaN", "NA"]
+
+    return None if str(value) in na_values else value
+
+
 def populate():
-    with open("assets/athlete_events.csv") as athlete_events:
-        reader = csv.reader(athlete_events)
 
-        # pula a row com o nome dos campos csv
-        next(reader)
+    athlete_list = pd.read_csv("assets/athlete_events.csv")
 
-        for i, rows in enumerate(reader):
+    df = pd.DataFrame(
+        athlete_list,
+        columns=[
+            "ID",
+            "Name",
+            "Sex",
+            "Age",
+            "Height",
+            "Weight",
+            "Team",
+            "NOC",
+            "Games",
+            "Year",
+            "Season",
+            "City",
+            "Sport",
+            "Event",
+            "Medal",
+        ],
+    )
 
-            # número da linha do registro no csv
-            # usado para identificar o game e usar como id
-            register_row_number = i + 1
+    for row in df.itertuples():
 
-            pk = rows[0]
-            name = rows[1]
-            sex = rows[2]
-            age = rows[3] if rows[3] != "NA" else None
-            height = rows[4] if rows[4] != "NA" else None
-            weight = float(rows[5]) if rows[5] != "NA" else None
-            team = rows[6]
-            noc = rows[7]
-            game_name = rows[8]
-            year = rows[9]
-            season = rows[10]
-            city = rows[11]
-            sport = rows[12]
-            event = rows[13]
-            medal = rows[14]
+        # número da linha de registros de jogos
+        # começa no index 2 do csv
+        register_row_number = row.Index + 2
 
-            athlete, _ = Athlete.objects.get_or_create(
-                id=pk,
-                defaults={
-                    "name": name,
-                    "sex": sex,
-                    "age": age,
-                    "height": height,
-                    "weight": weight,
-                    "team": team,
-                    "noc": noc,
-                },
-            )
+        athlete, _ = Athlete.objects.get_or_create(
+            id=row.ID,
+            defaults={
+                "name": row.Name,
+                "sex": row.Sex,
+                "age": normalize_na(row.Age),
+                "height": normalize_na(row.Height),
+                "weight": normalize_na(row.Weight),
+                "team": row.Team,
+                "noc": row.NOC,
+            },
+        )
 
-            game, _ = Game.objects.get_or_create(
-                id=register_row_number,
-                defaults={
-                    "name": game_name,
-                    "year": year,
-                    "season": season,
-                    "city": city,
-                    "sport": sport,
-                    "event": event,
-                    "medal": medal,
-                },
-            )
+        game, _ = Game.objects.get_or_create(
+            id=register_row_number,
+            defaults={
+                "name": row.Games,
+                "year": row.Year,
+                "season": row.Season,
+                "city": row.City,
+                "sport": row.Sport,
+                "event": row.Event,
+                "medal": normalize_na(row.Medal),
+            },
+        )
 
-            if not game.athlete.exists():
-                game.athlete.add(athlete)
-                print(f"Registo '{register_row_number}' adicionado.")
+        if not game.athlete.exists():
+            game.athlete.add(athlete)
 
 
 if __name__ == "__main__":
-    print("\nPopulando campos a partir do csv...")
+    startTime = datetime.now()
+    print("\nPopulando campos a partir do csv...\n")
 
     populate()
 
     print(f"\nPopulação concluída. Total de registros: {Game.objects.count()}\n")
+    print(f"Duração: {str(datetime.now() - startTime).split('.')[0]}")
