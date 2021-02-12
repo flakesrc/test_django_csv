@@ -32,7 +32,7 @@ class Game(models.Model):
     city = models.CharField(max_length=203)
     sport = models.CharField(max_length=204)
     event = models.CharField(max_length=205)
-    medal = models.CharField(max_length=10, choices=Medal.choices)
+    medal = models.CharField(max_length=10, choices=Medal.choices, null=True)
 
     def __str__(self):
         return self.name
