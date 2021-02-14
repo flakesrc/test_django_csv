@@ -16,6 +16,7 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
         model = Game
         fields = [
             "url",
+            "id",
             "name",
             "year",
             "season",
