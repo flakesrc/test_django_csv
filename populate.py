@@ -93,7 +93,7 @@ def populate():
     Game.objects.bulk_create(game_objs, ignore_conflicts=True)
 
     print("Atualizando valores da relação Game & Athlete ...")
-    GameAthlete.objects.bulk_create(game_athlete_objs)
+    GameAthlete.objects.bulk_create(game_athlete_objs, ignore_conflicts=True)
 
 
 if __name__ == "__main__":
