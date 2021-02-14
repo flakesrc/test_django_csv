@@ -45,6 +45,7 @@ class GameAthlete(models.Model):
 
     class Meta:
         db_table = "olympic_game_athlete"
+        unique_together = ("athlete", "game")
 
     def __str__(self):
         return f"{self.athlete} - {self.game}"
