@@ -47,6 +47,7 @@ def populate():
     for row in df.itertuples():
 
         athlete_instance = Athlete(
+            athlete_id_ref=row.ID,
             name=row.Name,
             sex=row.Sex,
             age=normalize_na(row.Age),
