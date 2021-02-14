@@ -76,11 +76,12 @@ def populate():
         )
         game_objs.append(game_instance)
 
+    # adiciona relações
     for game in Game.objects.all():
         athlete = Athlete.objects.get(id=game.athlete_id_ref)
-        game_athlete_objs.append(GameAthlete(athlete=athlete, game=game))
+        game_athlete_instance = GameAthlete(athlete=athlete, game=game)
 
-    GameAthlete.objects.bulk_create(game_athlete_objs)
+        game_athlete_objs.append(game_athlete_instance)
 
     # adiciona as instancias no banco de dados
     # ignore_conflicts ativado para não haver erro
@@ -94,13 +95,12 @@ def populate():
 
     # === adiciona/atualiza relação ===
 
-    athletes = Athlete.objects.all()
-    games = Game.objects.all()
-
     print("Atualizando valores da relação Game.athlete ...")
-    for game in games:
-        athlete_related = athletes.get(id=game.athlete_id_ref)
-        game.athlete.add(athlete_related)
+    GameAthlete.objects.bulk_create(game_athlete_objs)
+
+    # for game in games:
+    #     athlete_related = athletes.get(id=game.athlete_id_ref)
+    #     game.athlete.add(athlete_related)
 
 
 if __name__ == "__main__":
