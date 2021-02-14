@@ -6,3 +6,20 @@ class AthleteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Athlete
         fields = ["url", "name", "sex", "age", "height", "weight", "team", "noc"]
+
+
+class GameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+
+        model = Game
+        fields = [
+            "url",
+            "name",
+            "year",
+            "season",
+            "city",
+            "sport",
+            "event",
+            "medal",
+            "athlete",
+        ]
