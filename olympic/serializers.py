@@ -10,7 +10,6 @@ class AthleteSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
 
         model = Game
@@ -25,3 +24,4 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
             "medal",
             "athlete",
         ]
+        depth = 1
