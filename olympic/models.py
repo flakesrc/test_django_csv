@@ -46,3 +46,6 @@ class GameAthlete(models.Model):
 
     class Meta:
         db_table = "olympic_game_athlete"
+
+    def __str__(self):
+        return f"{self.athlete} - {self.game}"

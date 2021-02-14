@@ -1,4 +1,4 @@
-# tempo para finalizar a população no teste local: 0:06:02
+# tempo para finalizar a população no teste local: 0:00:44
 import os
 import django
 import pandas as pd
@@ -76,11 +76,10 @@ def populate():
         )
         game_objs.append(game_instance)
 
-    # adiciona relações
-    for game in Game.objects.all():
-        athlete = Athlete.objects.get(id=game.athlete_id_ref)
-        game_athlete_instance = GameAthlete(athlete=athlete, game=game)
-
+        # adiciona relações
+        game_athlete_instance = GameAthlete(
+            athlete=athlete_instance, game=game_instance
+        )
         game_athlete_objs.append(game_athlete_instance)
 
     # adiciona as instancias no banco de dados
@@ -95,12 +94,8 @@ def populate():
 
     # === adiciona/atualiza relação ===
 
-    print("Atualizando valores da relação Game.athlete ...")
+    print("Atualizando valores da relação Game & Athlete ...")
     GameAthlete.objects.bulk_create(game_athlete_objs)
-
-    # for game in games:
-    #     athlete_related = athletes.get(id=game.athlete_id_ref)
-    #     game.athlete.add(athlete_related)
 
 
 if __name__ == "__main__":
