@@ -17,7 +17,6 @@ class Athlete(models.Model):
 
 class Game(models.Model):
     class Medal(models.TextChoices):
-        NONE = None, _("None")
         NA = "NA", _("None")
         BRONZE = "Bronze", _("Bronze")
         SILVER = "Silver", _("Silver")
