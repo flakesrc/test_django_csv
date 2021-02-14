@@ -13,7 +13,10 @@ https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-result
 Com base neste dataset você deve criar os modelos para guardar estas informações na base de dados de maneira organizada e que evite a repetição de dados;
 Crie rotas para que o usuário possa interagir com os modelos (leitura, listagem, atualização,criação e deleção);
 Implemente uma rotina para popular a base de dados usando o csv como entrada;
-Toda a informação para rodar, popular e usar o projeto deve estar no arquivo README.md.PONTOS BÔNUS
+Toda a informação para rodar, popular e usar o projeto deve estar no arquivo README.md.
+
+PONTOS BÔNUS
+
 Testes unitários;
 Filtros na listagem;
 Diagrama relacional da base de dados;
@@ -24,12 +27,14 @@ Prazo
 Você terá 1 (uma) semana para concluir o desafio.
 
 Avaliação
+
 A utilização das tecnologias requeridas;
 A qualidade da modelagem feita, normalização e etc;
 Performance, tanto do método de popular a base de dados quanto das rotas;
-A forma com a qual você escolheu escrever o desafio (a arquitetura que usou, se escreveutestes automatizados, se está bem documentado, se possui uma boa legibilidade, etc);
-Como escolheu organizar o seu fluxo de trabalho no git (como uso de branches, separaçãodas responsabilidades, etc).
-Se o seu teste é genuíno, ou seja, se foi você quem o escreveu (evite soluções prontas, istocausará a sua imediata desclassificação).
+A forma com a qual você escolheu escrever o desafio (a arquitetura que usou, se escreveu
+testes automatizados, se está bem documentado, se possui uma boa legibilidade, etc);
+Como escolheu organizar o seu fluxo de trabalho no git (como uso de branches, separação das responsabilidades, etc).
+Se o seu teste é genuíno, ou seja, se foi você quem o escreveu (evite soluções prontas, isto causará a sua imediata desclassificação).
 
 Entrega
 
