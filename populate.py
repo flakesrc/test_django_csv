@@ -47,12 +47,7 @@ def populate():
 
     for row in df.itertuples():
 
-        # número da linha de registros de jogos
-        # começa no index 2 do csv
-        register_row_number = row.Index + 2
-
         athlete_instance = Athlete(
-            id=row.ID,
             name=row.Name,
             sex=row.Sex,
             age=normalize_na(row.Age),
@@ -64,8 +59,6 @@ def populate():
         athlete_objs.append(athlete_instance)
 
         game_instance = Game(
-            id=register_row_number,
-            athlete_id_ref=athlete_instance.id,
             name=row.Games,
             year=row.Year,
             season=row.Season,
