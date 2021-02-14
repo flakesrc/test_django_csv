@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Athlete(models.Model):
-    name = models.CharField(max_length=199)
+    name = models.CharField(max_length=200)
     sex = models.CharField(max_length=1)
     age = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
@@ -28,12 +28,12 @@ class Game(models.Model):
         to=Athlete, through="GameAthlete", related_name="games"
     )
 
-    name = models.CharField(max_length=201)
+    name = models.CharField(max_length=200)
     year = models.IntegerField()
-    season = models.CharField(max_length=202)
-    city = models.CharField(max_length=203)
-    sport = models.CharField(max_length=204)
-    event = models.CharField(max_length=205)
+    season = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    sport = models.CharField(max_length=200)
+    event = models.CharField(max_length=200)
     medal = models.CharField(max_length=10, choices=Medal.choices, null=True)
 
     def __str__(self):
