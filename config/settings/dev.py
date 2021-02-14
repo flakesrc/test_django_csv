@@ -1,5 +1,6 @@
 from .base import *
 
+SECRET_KEY = "9s=85-zgc)nn!ues2ubh4me2!s(v=uqzm@lp8*0l*aav+1r$10"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
