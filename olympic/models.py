@@ -22,7 +22,6 @@ class Game(models.Model):
         SILVER = "Silver", _("Silver")
         GOLD = "Gold", _("Gold")
 
-    athlete_id_ref = models.IntegerField(null=True)
     athlete = models.ManyToManyField(
         to=Athlete, through="GameAthlete", related_name="games"
     )
