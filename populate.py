@@ -58,7 +58,7 @@ def populate():
         athlete_objs.append(athlete_instance)
 
         game_instance = Game(
-            athlete_id_ref=athlete_instance.ID,
+            athlete_id_ref=row.ID,
             name=row.Games,
             year=row.Year,
             season=row.Season,
