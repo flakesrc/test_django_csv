@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Athlete(models.Model):
-    athlete_id_ref = models.IntegerField(null=True)
+    athlete_id_ref = models.IntegerField(null=True, unique=True)
     name = models.CharField(max_length=200)
     sex = models.CharField(max_length=1)
     age = models.IntegerField(null=True)
@@ -26,7 +26,7 @@ class Game(models.Model):
     athlete = models.ManyToManyField(
         to=Athlete, through="GameAthlete", related_name="games"
     )
-    athlete_id_ref = models.IntegerField(null=True)
+    athlete_id_ref = models.IntegerField(null=True, unique=True)
     name = models.CharField(max_length=200)
     year = models.IntegerField()
     season = models.CharField(max_length=200)
