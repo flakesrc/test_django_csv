@@ -92,8 +92,6 @@ def populate():
     print("Adicionando instâncias Game...")
     Game.objects.bulk_create(game_objs, ignore_conflicts=True)
 
-    # === adiciona/atualiza relação ===
-
     print("Atualizando valores da relação Game & Athlete ...")
     GameAthlete.objects.bulk_create(game_athlete_objs)
 
