@@ -12,6 +12,7 @@ class AthleteSerializer(serializers.HyperlinkedModelSerializer):
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
 
+        ordering = ["-id"]
         model = Game
         fields = [
             "url",
