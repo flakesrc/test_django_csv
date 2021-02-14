@@ -25,7 +25,7 @@ class Game(models.Model):
     athlete = models.ManyToManyField(
         to=Athlete, through="GameAthlete", related_name="games"
     )
-
+    athlete_id_ref = models.IntegerField(null=True)
     name = models.CharField(max_length=200)
     year = models.IntegerField()
     season = models.CharField(max_length=200)
