@@ -43,7 +43,6 @@ def populate():
 
     athlete_objs = []
     game_objs = []
-    game_athlete_objs = []
 
     for row in df.itertuples():
 
@@ -59,6 +58,7 @@ def populate():
         athlete_objs.append(athlete_instance)
 
         game_instance = Game(
+            athlete_id_ref=athlete_instance.ID,
             name=row.Games,
             year=row.Year,
             season=row.Season,
@@ -69,12 +69,6 @@ def populate():
         )
         game_objs.append(game_instance)
 
-        # adiciona relações
-        game_athlete_instance = GameAthlete(
-            athlete=athlete_instance, game=game_instance
-        )
-        game_athlete_objs.append(game_athlete_instance)
-
     # adiciona as instancias no banco de dados
     # ignore_conflicts ativado para não haver erro
     # se o registro já existir, caso o script seja
@@ -84,6 +78,17 @@ def populate():
 
     print("Adicionando instâncias Game...")
     Game.objects.bulk_create(game_objs, ignore_conflicts=True)
+
+    game_athlete_objs = []
+    # faz uma query para obter as instancias com o id
+    games = Game.objects.all()
+    athletes = Athlete.objects.all()
+
+    for game in games:
+        # adiciona relações
+        athlete = athletes.get(id=game.athlete_id_ref)
+        game_athlete_instance = GameAthlete(athlete=athlete, game=game)
+        game_athlete_objs.append(game_athlete_instance)
 
     print("Atualizando valores da relação Game & Athlete ...")
     GameAthlete.objects.bulk_create(game_athlete_objs, ignore_conflicts=True)
