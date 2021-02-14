@@ -24,7 +24,9 @@ class Game(models.Model):
         GOLD = "Gold", _("Gold")
 
     athlete_id_ref = models.IntegerField(null=True)
-    athlete = models.ManyToManyField(Athlete)
+    athlete = models.ManyToManyField(
+        to=Athlete, through="GameAthlete", related_name="games"
+    )
 
     name = models.CharField(max_length=201)
     year = models.IntegerField()
@@ -36,3 +38,11 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GameAthlete(models.Model):
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "olympic_game_athlete"
