@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Athlete(models.Model):
+    athlete_id_ref = models.IntegerField(null=True)
     name = models.CharField(max_length=200)
     sex = models.CharField(max_length=1)
     age = models.IntegerField(null=True)
