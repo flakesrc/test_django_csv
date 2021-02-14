@@ -8,7 +8,7 @@ from django.conf import settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 django.setup()
 
-from olympic.models import Game, Athlete
+from olympic.models import Game, Athlete, GameAthlete
 
 
 def normalize_na(value):
@@ -43,6 +43,7 @@ def populate():
 
     athlete_objs = []
     game_objs = []
+    game_athlete_objs = []
 
     for row in df.itertuples():
 
@@ -74,6 +75,12 @@ def populate():
             medal=normalize_na(row.Medal),
         )
         game_objs.append(game_instance)
+
+    for game in Game.objects.all():
+        athlete = Athlete.objects.get(id=game.athlete_id_ref)
+        game_athlete_objs.append(GameAthlete(athlete=athlete, game=game))
+
+    GameAthlete.objects.bulk_create(game_athlete_objs)
 
     # adiciona as instancias no banco de dados
     # ignore_conflicts ativado para não haver erro
