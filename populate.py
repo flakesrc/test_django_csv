@@ -86,7 +86,7 @@ def populate():
 
     for game in games:
         # adiciona relações
-        athlete = athletes.get(id=game.athlete_id_ref)
+        athlete = athletes.get(athlete_id_ref=game.athlete_id_ref)
         game_athlete_instance = GameAthlete(athlete=athlete, game=game)
         game_athlete_objs.append(game_athlete_instance)
 
