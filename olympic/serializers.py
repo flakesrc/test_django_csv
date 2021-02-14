@@ -4,11 +4,13 @@ from .models import Athlete, Game
 
 class AthleteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
+        ordering = ["-id"]
         model = Athlete
-        fields = ["url", "name", "sex", "age", "height", "weight", "team", "noc"]
+        fields = ["url", "id", "name", "sex", "age", "height", "weight", "team", "noc"]
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
 
         model = Game
