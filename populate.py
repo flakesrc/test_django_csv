@@ -1,4 +1,4 @@
-# tempo para finalizar a população no teste local: 0:00:44
+# tempo para finalizar a população no teste local: 0:01:22
 import os
 import django
 import pandas as pd
