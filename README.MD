@@ -119,3 +119,31 @@ Se deletado com sucesso, irá retornar:
 ```
 HTTP/1.1 204 No Content
 ```
+
+## Notas
+
+Algumas notas e observações sobre o teste e o processo de criação do projeto
+
+1. Depois de popular o banco de dados e tentar inserir algum novo registro, o Django poderá 
+levantar um erro de integridade, e pelo que li no google até o momento, isso parece ser algum "BUG", pois nada no código
+justifica esse erro. Quando ocorreu localmente, eu simplesmente deletei os arquivos de migrações do app olympic
+(havia diversos) e criei
+uma nova migração para gerar um único arquivo
+
+2. O arquivo requirements.txt é para caso você deseje usar o pip diretamente, e não seguir o passo a passo do README
+
+3. populate_sem_bulk.py foi o primeiro código que funcionava, depois dele pesquisei sobre como otimizar, o que 
+me levou ao bulk
+
+4. o campo athlete_id_ref tanto de Games como Athletes é para "sincronizar" uma mesma referência e 
+saber qual instância de Game pertence a qual instância de Athlete, pois após o loop for que gera as instâncias
+para o bulk, essa mesma referencia seria perdida, e não teria como saber o que pertence ao que. 
+E eu precisei disso para gerar o último bulk de atualização dos campos relacionados, porque sem isso,
+o código ficaria misto entre full bulk e uma query para cada instância, e estava levando cerca de 7 minutos para popular, 
+e após deixar "full bulk", demorou cerca de 44 segundos a 1 minuto e 20 segundos para popular localmente.
+
+5. Um erro meu: por falta de costume, acabei utilizando somente uma branch para todo o trabalho, a branch `dev`,
+tenho conhecimentos em sepração de branches utilizando o git flow, mas acabei não usando. As mensagens de commits talvez
+não soem muito claras em alguns commits, e por causa do formatador (que as vezes simplesmente adicionava um espaço
+no final de um arquivo), as vezes a mensagem de alteração de um arquivo acabou indo para 2, já que o espaço em branco no final do arquivo modificava ele.
+
