@@ -10,6 +10,9 @@ class AthleteSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
+    athlete_qs = Athlete.objects.all()
+    athlete = serializers.PrimaryKeyRelatedField(queryset=athlete_qs, many=True)
+
     class Meta:
 
         ordering = ["-id"]
