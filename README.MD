@@ -85,3 +85,37 @@ neste exemplo, irei mostrar como interagir utilizando a biblioteca CLI `httpie`
 http POST http://localhost:8000/athletes/ \
 name="Marcos Souza" sex="M" age=24 height=167 weight=70 team=Brazil noc=BR >
 ```
+
+Em seguida, você recebera algo como:
+```
+HTTP/1.1 201 Created
+# ...
+{
+    "age": 24,
+    "height": 167,
+    "id": 271117,
+    "name": "Marcos Souza",
+    "noc": "BR",
+    "sex": "M",
+    "team": "Brazil",
+    "url": "http://localhost:8000/athletes/271117/",
+    "weight": 70.0
+}
+```
+
+Vamos lembrar o `271117` e usa-lo para relacionar na instância de um jogo olímpico. 
+
+- Criando uma instância de Game: 
+```
+http POST http://localhost:8000/games/ \
+name="Gambi 2021" year=2021 season="Summer" city="Rio de Janeiro" sport="Gambi"  \
+event="Gambi Maker and eXtreme Go Horse Master" medal="Gold" athlete:="[271117]"
+```
+
+5. Deletando uma instância
+- Exemplo: `http DELETE http://localhost:8000/athletes/271117/`
+
+Se deletado com sucesso, irá retornar:
+```
+HTTP/1.1 204 No Content
+```
