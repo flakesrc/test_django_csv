@@ -147,3 +147,5 @@ tenho conhecimentos em sepração de branches utilizando o git flow, mas acabei 
 não soem muito claras em alguns commits, e por causa do formatador (que as vezes simplesmente adicionava um espaço
 no final de um arquivo), as vezes a mensagem de alteração de um arquivo acabou indo para 2, já que o espaço em branco no final do arquivo modificava ele.
 
+6. Como todos sabemos, SECRET_KEY não deve ser upada no repositório, mas deixei no código por praticidade,
+e para caso de deploy, será utilizada uma nova SECRET_KEY
