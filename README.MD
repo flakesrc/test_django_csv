@@ -2,6 +2,9 @@
 
 O projeto fornece uma api REST para interagir com alguns dados das olimpíadas de 1986 a 2016;
 
+## Projeto hospedado
+
+https://testcelero.herokuapp.com/
 ## Executando o projeto localmente
 
 1. Primeiro, certifique-se de ter o `PostgreSQL` instalado e executando, em seguida, crie um banco de dados com o nome `celero_db`, com o owner `celero`, e password `celero`, apenas para testar localmente.
