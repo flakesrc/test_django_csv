@@ -8,6 +8,7 @@ from django.conf import settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
 django.setup()
 
+
 from olympic.models import Game, Athlete, GameAthlete
 
 
@@ -40,6 +41,10 @@ def populate():
             "Medal",
         ],
     )
+
+    # em produção não irá inserir todos os dados
+    if not settings.DEBUG:
+        df.head(5000)
 
     athlete_objs = []
     game_objs = []
