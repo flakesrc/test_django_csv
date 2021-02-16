@@ -11,6 +11,7 @@ djangorestframework = "*"
 pandas = "*"
 numpy = "*"
 dj-database-url = "*"
+gunicorn = "*"
 
 [dev-packages]
 
