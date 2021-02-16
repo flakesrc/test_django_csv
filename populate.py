@@ -44,7 +44,7 @@ def populate():
 
     # em produção não irá inserir todos os dados
     if not settings.DEBUG:
-        df.head(5000)
+        df = df.head(1000)
 
     athlete_objs = []
     game_objs = []
@@ -106,5 +106,5 @@ if __name__ == "__main__":
 
     populate()
 
-    print(f"\nPopulação concluída. Total de registros: {Game.objects.count()}\n")
+    print(f"\nPopulação concluída. Total de jogos: {Game.objects.count()}\n")
     print(f"Duração: {str(datetime.now() - startTime).split('.')[0]}")
